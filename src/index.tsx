@@ -4,8 +4,10 @@ import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from 'react-apollo'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { Provider } from 'react-redux'
 
 import fragmentMatcher from './config/apollo/fragmentMatcher'
+import store from './store'
 
 import App from './App'
 import TabMenu from './components/SignIn/TabMenu'
@@ -20,16 +22,18 @@ const client = new ApolloClient({
 })
 
 ReactDOM.render(
-  <Router>
-    <ApolloProvider client={client}>
-      <Switch>
-          <Route path='/' exact={true} component={TabMenu} />
-          <App>
-              <Route path='/user' component={Content} />
-          </App>
-      </Switch>
-    </ApolloProvider>
-  </Router>,
+  <ApolloProvider client={client}>
+    <Provider store={store}>
+        <Router>
+              <Switch>
+                  <Route path='/' exact={true} component={TabMenu} />
+                  <App>
+                      <Route path='/user' component={Content} />
+                  </App>
+              </Switch>
+        </Router>
+      </Provider>
+    </ApolloProvider>,
   document.getElementById('root') as HTMLElement
 );
 registerServiceWorker();
