@@ -1,4 +1,10 @@
 import * as React from 'react'
+import { connect } from 'react-redux'
+
+// import action reducer
+// import { loginUser } from '../../actions/UserAction' 
+
+import { IUserType } from '../../reducers/UserType'
 
 // import @material-ui/core
 import AppBar from '@material-ui/core/AppBar'
@@ -36,6 +42,8 @@ const styles = (theme : any) => createStyles({
 interface IProps {
     classes : any
     history : any
+    loginUser : any
+    user : IUserType
 }
 
 interface IState {
@@ -45,6 +53,7 @@ interface IState {
     userLogin : {
         username : string,
         password : string,
+        isLoggedin : boolean
     },
     userRegister : {
         username : string,
@@ -69,6 +78,7 @@ class TabMenu extends React.Component<IProps, IState> {
             userLogin : {
                 username : '',
                 password : '',
+                isLoggedin : false
             },
             userRegister : {
                 username : '',
@@ -79,6 +89,14 @@ class TabMenu extends React.Component<IProps, IState> {
                 kuliah : '',
                 status : 'Mahasiswa',
             },
+        }
+    }
+
+    public componentDidMount()
+    {
+        if( this.props.user.isLoggedIn)
+        {
+            this.props.history.push('/user')
         }
     }
 
@@ -112,21 +130,38 @@ class TabMenu extends React.Component<IProps, IState> {
         })
     }
 
-    public submitUserLogin = (userLogin : any, data : any) => {
+    public submitUserLogin = (userLogin : any) => {
         // console.log(data)
         userLogin({
             variables : {
                 username : this.state.userLogin.username,
                 password : this.state.userLogin.password
             }
+        }).then((res : any) => {
+            if(res.data && res.data.userLogin)
+            {
+                console.log(res.data.userLogin)
+                this.props.loginUser(res.data.userLogin.username, res.data.userLogin.profile.firstName, res.data.userLogin.profile.lastName, res.data.userLogin.id)
+                this.props.history.push('/user')
+            }
         })
+    }
+
+    public handleLoggedIn = () => {
+        this.setState({ userLogin : { ...this.state.userLogin, isLoggedin : !this.state.userLogin.isLoggedin } })
+
+        if(this.state.userLogin.isLoggedin)
+        {
+            this.props.history.push('/user')
+        }
     }
 
     public render()
     {
         const { classes } = this.props
         const { value } = this.state
-        console.log(this.props)
+        // console.log('hey')
+        // console.log(this.props)
         return(
             <Grid
                 container={true}
@@ -166,6 +201,8 @@ class TabMenu extends React.Component<IProps, IState> {
                             changeTextField={this.changeTextField}
                             submitUserLogin={this.submitUserLogin}
                             history={this.props.history}
+                            loginUser={this.props.loginUser}
+                            handleLoggedIn={this.handleLoggedIn}
                         /> : 
                         <RegisterPage 
                             username={this.state.userRegister.username}
@@ -187,4 +224,18 @@ class TabMenu extends React.Component<IProps, IState> {
     }
 }
 
-export default withStyles(styles)(TabMenu)
+const mapDispatchToProps = (dispatch : React.Dispatch<any>) => {
+    return {
+        loginUser  : (username : string, firstName : string, lastName : string, id : string) => { 
+            dispatch({ type : 'LOGIN_USER', username, firstName, lastName, id, isLoggedIn : true})
+        },
+    }
+}
+
+const mapStateTopProps = (state : IUserType) => {
+    return {
+        user : state
+    }
+}
+
+export default connect(mapStateTopProps, mapDispatchToProps)(withStyles(styles)(TabMenu))
