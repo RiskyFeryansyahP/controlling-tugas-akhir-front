@@ -28,19 +28,19 @@ const ProfileMahasiswa = (props : any) => {
             <ExpansionPanel>
                 <ExpansionPanelSummary>
                     <Typography align='left' className={classes.heading}>Nama Depan</Typography>
-                    <Typography className={classes.secondaryHeading}>Risky Feryansyah</Typography>
+                    <Typography className={classes.secondaryHeading}> {props.firstName} </Typography>
                 </ExpansionPanelSummary>
             </ExpansionPanel>
             <ExpansionPanel>
                 <ExpansionPanelSummary>
                     <Typography align='left' className={classes.heading}>Nama Belakang</Typography>
-                    <Typography className={classes.secondaryHeading}>Feryansyah</Typography>
+                    <Typography className={classes.secondaryHeading}> {props.lastName} </Typography>
                 </ExpansionPanelSummary>
             </ExpansionPanel>
             <ExpansionPanel>
                 <ExpansionPanelSummary>
                     <Typography align='left' className={classes.heading}>Username</Typography>
-                    <Typography className={classes.secondaryHeading}>clarie3</Typography>
+                    <Typography className={classes.secondaryHeading}> {props.username} </Typography>
                 </ExpansionPanelSummary>
             </ExpansionPanel>
             <ExpansionPanel>
