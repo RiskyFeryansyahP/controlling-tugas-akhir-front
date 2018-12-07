@@ -48,8 +48,8 @@ const styles = (theme : any) => ({
 const Header = (props : any) => {
     const { classes } = props
     const open = Boolean(props.anchorEl)
-    console.log(classes)
-    console.log(props.open)
+    // console.log(classes)
+    // console.log(props.open)
     return(
         <AppBar
             position='fixed'
@@ -78,7 +78,7 @@ const Header = (props : any) => {
                 >
                       <AccountCircle className={classes.menuButtonRight} fontSize='large' />
                       <Typography variant='headline' color='inherit'>
-                        Risky
+                        { props.firstName }
                     </Typography>
                 </IconButton>
                 <Menu
