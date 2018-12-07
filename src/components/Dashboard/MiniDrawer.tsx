@@ -1,13 +1,33 @@
 import * as React from 'react'
 
+// import redux connect
+import { connect } from 'react-redux'
+import { IUserType } from '../../reducers/UserType'
+
 // import component reusable 
 import Header from './Header'
 import Menu from './Menu'
 
-class MiniDrawer extends React.Component {
-    public state = {
-        open : false,
-        anchorEl : null
+interface IProps {
+    user : IUserType
+}
+
+interface IState {
+    open : boolean
+    anchorEl : any
+    firstName : string
+}
+
+class MiniDrawer extends React.Component<IProps, IState> {
+
+    constructor(props : IProps)
+    {
+        super(props as any)
+        this.state = {
+            open : false,
+            anchorEl : null,
+            firstName : ''
+        }
     }
 
     public handleDrawerOpen = () => {
@@ -28,6 +48,7 @@ class MiniDrawer extends React.Component {
     
     public render()
     {
+        console.log("props", this.props.user)
         return(
             <React.Fragment>
                 <Header 
@@ -36,6 +57,7 @@ class MiniDrawer extends React.Component {
                     handleClickCloseMenu={this.handleClickCloseMenu}
                     handleClickOpenMenu={this.handleClickOpenMenu}
                     anchorEl={this.state.anchorEl}
+                    firstName={this.props.user.firstName}
                 />
                 <Menu 
                     handleDrawerClose={this.handleDrawerClose}
@@ -46,4 +68,10 @@ class MiniDrawer extends React.Component {
     }
 }
 
-export default MiniDrawer
+const mapStateToProps = (state : IUserType) => {
+    return {
+        user : state
+    }
+}
+
+export default connect(mapStateToProps, {})(MiniDrawer)
