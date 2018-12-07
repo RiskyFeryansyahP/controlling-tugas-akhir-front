@@ -42,7 +42,9 @@ interface IProps {
     showPassword : boolean
     changeTextField : any
     handleChangeShowPassword : any
+    handleLoggedIn : any
     history : any
+    loginUser : any
 }
 
 const LoginPage = (props : IProps) => {
@@ -54,15 +56,15 @@ const LoginPage = (props : IProps) => {
                         mutation={LoginUserMutation}
                     >
                         {(userLogin, { data }) => {
-                            const SubmitLogin = () => props.submitUserLogin(userLogin, data)
+                            const SubmitLogin = () => {
+                                props.submitUserLogin(userLogin)
+                            }
                             return(
                                 <Grid
                                     container={true} 
                                     spacing={8} 
                                     alignItems="flex-end"
                                 >
-                                {/* cek apakah user ada ? */}
-                                {data && data.userLogin ? props.history.push('/user') : ''} 
                                 {/* cek apakah user gagal login */}
                                 { data && data.userLogin === null ? 
                                     <Grid item={true} xs={12}>
@@ -121,7 +123,7 @@ const LoginPage = (props : IProps) => {
                                             fullWidth={true}
                                             onClick={SubmitLogin}
                                         > 
-                                        {/* { data && data.userLogin ? console.log(data) : '' } */}
+                                        {/* { data && data.userLogin ? props.history.push('/user') : '' } */}
                                             LOGIN 
                                         </Button>
                                     </Grid>
