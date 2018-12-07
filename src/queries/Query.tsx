@@ -20,6 +20,8 @@ export const RegisterUserMutation = gql`
 export const LoginUserMutation = gql`
     mutation($username : String!, $password : String!) {
         userLogin(username : $username, password : $password) {
+            id,
+            username,
             status,
             profile {
                 ... mahasiswaDetail
