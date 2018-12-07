@@ -22,6 +22,10 @@ interface IProps {
 }
 
 class App extends React.Component<IProps> {
+  constructor(props : IProps)
+  {
+    super(props)
+  }
   public render() {
     const { classes } = this.props
     return (
