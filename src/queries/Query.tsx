@@ -32,3 +32,46 @@ export const LoginUserMutation = gql`
     ${mahasiswaFragment}
     ${dosenFragment}
 `
+
+export const AddDosenToMahasiswaMutation = gql`
+    mutation AddDosenToMahasiswa($id : String, $code : String) {
+        addDosenToMahasiswa(id : $id, code : $code) {
+            ... mahasiswaDetail
+            ... dosenDetail
+        }
+    }
+    ${mahasiswaFragment}
+    ${dosenFragment}
+`
+
+export const getMahasiswasQuery = gql`
+    {
+        mahasiswas {
+            firstName
+            lastName
+            college
+            dosen {
+                id
+                firstName
+                lastName
+                code
+            }
+        }
+    }
+`
+
+export const getMahasiswaQuery = gql`
+    query Mahasiswa($id : String!) {
+        mahasiswa(id : $id) {
+            id
+            firstName
+            lastName
+            dosen {
+                id
+                firstName
+                lastName
+                code
+            }
+        }
+    }
+`
