@@ -1,10 +1,13 @@
 import * as React from 'react'
-
-// import connect from react-redux
 import { connect } from 'react-redux'
+import { Query } from 'react-apollo'
 
-// import types reducer
+// import RootQuery Graphql
+import { getMahasiswaQuery } from '../../queries/Query'
+
+// import types reducer & graphql
 import { IUserType } from '../../reducers/UserType'
+import { IDosen } from '../../queries/MahasiswaTypes'
 
 // Import @material-ui/core
 import AppBar from '@material-ui/core/AppBar'
@@ -54,6 +57,8 @@ interface IProps {
 
 interface IState {
     open : boolean
+    code : string
+    id_mahasiswa : string
 }
 
 class Content extends React.Component<IProps, IState> {
@@ -61,7 +66,9 @@ class Content extends React.Component<IProps, IState> {
     {
         super(props)
         this.state = {
-            open : false
+            open : false,
+            code : '',
+            id_mahasiswa : this.props.user.id_mahasiswa
         }
     }
 
@@ -71,6 +78,23 @@ class Content extends React.Component<IProps, IState> {
 
     public handleClose = () => {
         this.setState({ open : false })
+    }
+
+    public submitCodeDosen = (event : React.SyntheticEvent ,addDosenToMahasiswa : any) => {
+        console.log(this.props.user.id_mahasiswa)
+        event.preventDefault()
+        addDosenToMahasiswa({
+            variables : {
+                code : this.state.code,
+                id : this.props.user.id_mahasiswa
+            },
+            refetchQueries : [{ query : getMahasiswaQuery, variables : { id : this.state.id_mahasiswa } }]
+        })
+        this.setState({ open : false })
+    }
+
+    public handleChange = (event : React.FormEvent<HTMLInputElement>) => {
+        this.setState({ code : event.currentTarget.value })
     }
     
     public render()
@@ -118,17 +142,33 @@ class Content extends React.Component<IProps, IState> {
                                     <DialogFormAddDosen 
                                         open={this.state.open}
                                         handleClose={this.handleClose}
+                                        submitCodeDosen={this.submitCodeDosen}
+                                        handleChange={this.handleChange}
+                                        code={this.state.code}
                                     />
-                                    {/* <Button variant='fab' color='secondary' aria-label='Add' mini={true}> */}
-                                        {/* <Add />
-                                    </Button> */}
                                 </ToolBar>
                             </AppBar>
                             <Paper className={classes.paper}> 
                                 <Typography variant='headline' align='center' className={classes.grow}>
-                                    <DosenProfile />
+                                    <Query<IDosen>
+                                    query={getMahasiswaQuery}
+                                    variables={{ id : this.state.id_mahasiswa }}
+                                    >
+                                        {({ data, loading }) => {
+                                            console.log(data)
+                                            if(loading || !data || data.mahasiswa.dosen === null)
+                                            {
+                                                return( <div>Loading....!</div> )
+                                            }
+
+                                            return(
+                                                <DosenProfile 
+                                                    dosen={data.mahasiswa.dosen}
+                                                />
+                                            )
+                                        }}
+                                    </Query>
                                 </Typography>
-                                
                             </Paper>
                         </Grid>
                     </Grid>
