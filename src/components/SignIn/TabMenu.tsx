@@ -141,7 +141,7 @@ class TabMenu extends React.Component<IProps, IState> {
             if(res.data && res.data.userLogin)
             {
                 console.log(res.data.userLogin)
-                this.props.loginUser(res.data.userLogin.username, res.data.userLogin.profile.firstName, res.data.userLogin.profile.lastName, res.data.userLogin.id)
+                this.props.loginUser(res.data.userLogin.username, res.data.userLogin.profile.firstName, res.data.userLogin.profile.lastName, res.data.userLogin.id, res.data.userLogin.profile.id)
                 this.props.history.push('/user')
             }
         })
@@ -226,8 +226,8 @@ class TabMenu extends React.Component<IProps, IState> {
 
 const mapDispatchToProps = (dispatch : React.Dispatch<any>) => {
     return {
-        loginUser  : (username : string, firstName : string, lastName : string, id : string) => { 
-            dispatch({ type : 'LOGIN_USER', username, firstName, lastName, id, isLoggedIn : true})
+        loginUser  : (username : string, firstName : string, lastName : string, id : string, mahasiswa : string) => { 
+            dispatch({ type : 'LOGIN_USER', username, firstName, lastName, id, mahasiswa, isLoggedIn : true})
         },
     }
 }
