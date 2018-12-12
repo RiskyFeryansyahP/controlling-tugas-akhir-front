@@ -1,4 +1,8 @@
 import * as React from 'react'
+// import { Query } from 'react-apollo'
+
+// import query mahasiswa on graphql server
+// import { MahasiswaQuery } from '../../queries/Query'
 
 // import @material-ui/component
 import ExpansionPanel from '@material-ui/core/ExpansionPanel'
@@ -22,6 +26,7 @@ const styles = (theme : any) => createStyles({
 })
 
 const DosenProfile = (props : any) => {
+    console.log("render")
     const { classes } = props
     return (
         <div className={classes.root} >
@@ -34,7 +39,7 @@ const DosenProfile = (props : any) => {
             <ExpansionPanel>
                 <ExpansionPanelSummary>
                     <Typography align='left' className={classes.heading}>Nama Belakang</Typography>
-                    <Typography className={classes.secondaryHeading}>Additya</Typography>
+                    <Typography className={classes.secondaryHeading}>Aditya</Typography>
                 </ExpansionPanelSummary>
             </ExpansionPanel>
             <ExpansionPanel>
@@ -46,7 +51,7 @@ const DosenProfile = (props : any) => {
             <ExpansionPanel>
                 <ExpansionPanelSummary>
                     <Typography align='left' className={classes.heading}>Password</Typography>
-                    <Typography className={classes.secondaryHeading}>*******3</Typography>
+                    <Typography className={classes.secondaryHeading}>addin</Typography>
                 </ExpansionPanelSummary>
             </ExpansionPanel>
         </div>
