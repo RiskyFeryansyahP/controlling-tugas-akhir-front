@@ -3,6 +3,7 @@ const userState = {
     firstName : '',
     lastName : '',
     id : '',
+    id_mahasiswa : '',
     isLoggedIn : false
 }
 
@@ -18,6 +19,7 @@ const UserReducer = (state = userState, action : any) => {
                 firstName : action.firstName,
                 lastName : action.lastName,
                 id : action.id,
+                id_mahasiswa : action.mahasiswa,
                 isLoggedIn : action.isLoggedIn
             }
         default: 
