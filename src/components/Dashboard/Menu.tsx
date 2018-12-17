@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { Link } from 'react-router-dom'
 
 // import @material-ui/core 
 import Drawer from '@material-ui/core/Drawer'
@@ -78,12 +79,14 @@ const Menu = (props : any) => {
                     <ListItemText primary={text} />
                 </ListItem>
                 ))} */}
-                <ListItem button={true}>
-                    <ListItemIcon>
-                        <AccountBox />
-                    </ListItemIcon>
-                    <ListItemText primary={'Profile'} />
-                </ListItem>
+                <Link to='/tugas' style={{ textDecoration: 'none' }}>
+                    <ListItem button={true}>
+                        <ListItemIcon>
+                            <AccountBox />
+                        </ListItemIcon>
+                        <ListItemText primary={'Create Tugas Akhir'} />
+                    </ListItem>
+                </Link>
 
                 <ListItem button={true}>
                     <ListItemIcon>
