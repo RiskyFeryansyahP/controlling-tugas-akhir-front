@@ -106,7 +106,8 @@ const RegisterPage = (props : IProps) => {
                         <Lock />
                     </Grid>
                     <Grid item={true} xs={4}>
-                        <TextField 
+                        <TextField
+                            type='password' 
                             id="input-password" 
                             label="Password" 
                             name='password'
