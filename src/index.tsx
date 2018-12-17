@@ -12,6 +12,7 @@ import store from './store'
 import App from './App'
 import TabMenu from './components/SignIn/TabMenu'
 import Content from './components/Content/Content'
+import CreateTugas from './components/Tugas/CreateTugas'
 import registerServiceWorker from './registerServiceWorker'
 
 const cache = new InMemoryCache({ fragmentMatcher })
@@ -29,6 +30,7 @@ ReactDOM.render(
                   <Route path='/' exact={true} component={TabMenu} />
                   <App>
                       <Route path='/user' component={Content} />
+                      <Route path='/tugas' component={CreateTugas} />
                   </App>
               </Switch>
         </Router>
