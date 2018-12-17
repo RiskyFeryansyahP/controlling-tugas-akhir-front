@@ -17,3 +17,11 @@ export const dosenFragment = gql`
         code
     }
 `
+
+export const tugasFragment = gql`
+    fragment tugasDetail on tugas {
+        id
+        judul
+        keterangan
+    }
+`
