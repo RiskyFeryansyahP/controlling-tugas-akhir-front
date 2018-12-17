@@ -33,25 +33,25 @@ const DosenProfile = (props : any) => {
             <ExpansionPanel>
                 <ExpansionPanelSummary>
                     <Typography align='left' className={classes.heading}>Nama Depan</Typography>
-                    <Typography className={classes.secondaryHeading}>Addin</Typography>
+                    <Typography className={classes.secondaryHeading}> {props.dosen.firstName} </Typography>
                 </ExpansionPanelSummary>
             </ExpansionPanel>
             <ExpansionPanel>
                 <ExpansionPanelSummary>
                     <Typography align='left' className={classes.heading}>Nama Belakang</Typography>
-                    <Typography className={classes.secondaryHeading}>Aditya</Typography>
+                    <Typography className={classes.secondaryHeading}>{ props.dosen.lastName }</Typography>
                 </ExpansionPanelSummary>
             </ExpansionPanel>
             <ExpansionPanel>
                 <ExpansionPanelSummary>
-                    <Typography align='left' className={classes.heading}>Username</Typography>
-                    <Typography className={classes.secondaryHeading}>addin</Typography>
+                    <Typography align='left' className={classes.heading}>ID</Typography>
+                    <Typography className={classes.secondaryHeading}> { props.dosen.id } </Typography>
                 </ExpansionPanelSummary>
             </ExpansionPanel>
             <ExpansionPanel>
                 <ExpansionPanelSummary>
                     <Typography align='left' className={classes.heading}>Password</Typography>
-                    <Typography className={classes.secondaryHeading}>addin</Typography>
+                    <Typography className={classes.secondaryHeading}> { props.dosen.code } </Typography>
                 </ExpansionPanelSummary>
             </ExpansionPanel>
         </div>
