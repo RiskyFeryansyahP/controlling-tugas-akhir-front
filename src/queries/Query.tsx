@@ -1,6 +1,6 @@
 import { gql } from 'apollo-boost'
 
-import { mahasiswaFragment, dosenFragment } from './Fragments'
+import { mahasiswaFragment, dosenFragment, tugasFragment } from './Fragments'
 
 export const RegisterUserMutation = gql`
     mutation($username : String!, $password : String!, $email : String!, $status : String!, $firstName : String!, $lastName : String!, $college : String!) {
@@ -42,6 +42,17 @@ export const AddDosenToMahasiswaMutation = gql`
     }
     ${mahasiswaFragment}
     ${dosenFragment}
+`
+
+export const addTugasToMahasiswaMutation = gql`
+    mutation AddTugasToMahasiswa($id : String!, $judul : String!, $keterangan : String!) {
+        addTugasMahasiswa(id : $id, judul : $judul, keterangan : $keterangan) {
+            ... mahasiswaDetail
+            ... tugasDetail
+        }
+    }
+    ${mahasiswaFragment}
+    ${tugasFragment}
 `
 
 export const getMahasiswasQuery = gql`
