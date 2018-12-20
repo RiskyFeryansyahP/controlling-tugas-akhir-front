@@ -8,6 +8,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import AccountBox from '@material-ui/icons/AccountBox'
 import Book from '@material-ui/icons/Book'
+import AccountHome from '@material-ui/icons/Home'
 import Divider from '@material-ui/core/Divider'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -79,6 +80,14 @@ const Menu = (props : any) => {
                     <ListItemText primary={text} />
                 </ListItem>
                 ))} */}
+                <Link to='/user' style={{ textDecoration: 'none' }}>
+                    <ListItem button={true}>
+                        <ListItemIcon>
+                            <AccountHome />
+                        </ListItemIcon>
+                        <ListItemText primary={'Home'} />
+                    </ListItem>
+                </Link>
                 <Link to='/tugas' style={{ textDecoration: 'none' }}>
                     <ListItem button={true}>
                         <ListItemIcon>
@@ -87,13 +96,14 @@ const Menu = (props : any) => {
                         <ListItemText primary={'Create Tugas Akhir'} />
                     </ListItem>
                 </Link>
-
-                <ListItem button={true}>
-                    <ListItemIcon>
-                        <Book />
-                    </ListItemIcon>
-                    <ListItemText primary={'Meeting Book'} />
-                </ListItem>
+                <Link to='/meet' style={{ textDecoration : 'none' }}>
+                    <ListItem button={true}>
+                        <ListItemIcon>
+                            <Book />
+                        </ListItemIcon>
+                        <ListItemText primary={'Meeting Book'} />
+                    </ListItem>
+                </Link>
             </List>
         </Drawer>
     )
