@@ -9,6 +9,7 @@ const introspectionQueryResultData = {
             possibleTypes: [
                 { name: "MahasiswaType" },
                 { name: "DosenType" },
+                {name : "TugasType"},
             ],
             }, // this is an example, put your INTERFACE and UNION kinds here!
         ],
