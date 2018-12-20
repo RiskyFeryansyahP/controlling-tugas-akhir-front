@@ -55,6 +55,16 @@ export const addTugasToMahasiswaMutation = gql`
     ${tugasFragment}
 `
 
+export const MahasiswaAddMeetWithDosenMutation = gql`
+    mutation MahasiswaAddMeetWithDosen($id_mahasiswa : String!, $dosen_code : String!, $jam_awal : String!, $jam_akhir : String!, $keterangan : String!) {
+        mahasiswaAddMeetWithDosen(id_mahasiswa : $id_mahasiswa, dosen_code : $dosen_code, jam_awal : $jam_awal, jam_akhir : $jam_akhir, keterangan : $keterangan) {
+            jam_awal,
+            jam_akhir,
+            keterangan
+        }
+    }
+`
+
 export const getMahasiswasQuery = gql`
     {
         mahasiswas {
@@ -82,6 +92,31 @@ export const getMahasiswaQuery = gql`
                 firstName
                 lastName
                 code
+            }
+            tugas {
+                judul
+                bab1
+                bab2
+                bab3
+                bab4
+                bab5
+            }
+        }
+    }
+`
+
+export const getMeetDosen = gql`
+    query MeetDosen($id_mahasiswa : String!) {
+        meetDosen(id_mahasiswa : $id_mahasiswa) {
+            id
+            jam_awal
+            jam_akhir
+            keterangan
+            status
+            mahasiswa {
+                dosen {
+                    firstName
+                }
             }
         }
     }
