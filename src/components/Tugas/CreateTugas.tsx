@@ -28,6 +28,7 @@ const style = (theme : any) => createStyles({
     content: {
         padding: theme.spacing.unit * 10,
         width: '100%',
+        height: '100%',
     },
     dense : {
         marginTop : 19,
@@ -40,6 +41,9 @@ const style = (theme : any) => createStyles({
     button: {
         margin: theme.spacing.unit,
     },
+    paper : {
+        height : '50vh',
+    }
 })
 
 interface IProps {
@@ -104,7 +108,7 @@ class CreateTugas extends React.Component<IProps, IState> {
                 <div className={classes.root}>
                     <Grid container={true}>
                         <Grid item={true} xs={12}>
-                            <Paper>
+                            <Paper className={classes.paper}>
                                 <Typography variant='headline' align='center'>
                                     Form Pembuatan Tugas Akhir Untuk Controlling
                                 </Typography>
