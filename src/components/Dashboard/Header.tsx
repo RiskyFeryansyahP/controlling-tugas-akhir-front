@@ -69,7 +69,7 @@ const Header = (props : any) => {
                       <MenuIcon />
                 </IconButton>
                 <Typography variant="h6" color="inherit" noWrap={true} className={classes.grow}>
-                      CONTROLLING TUGAS AKHIR
+                    CONTROLLING TUGAS AKHIR
                 </Typography>
                 <IconButton
                     color='inherit'
