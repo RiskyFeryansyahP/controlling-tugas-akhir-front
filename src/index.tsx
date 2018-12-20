@@ -13,6 +13,8 @@ import App from './App'
 import TabMenu from './components/SignIn/TabMenu'
 import Content from './components/Content/Content'
 import CreateTugas from './components/Tugas/CreateTugas'
+import MeetingBook from './components/Meeting/MeetingBook'
+
 import registerServiceWorker from './registerServiceWorker'
 
 const cache = new InMemoryCache({ fragmentMatcher })
@@ -31,6 +33,7 @@ ReactDOM.render(
                   <App>
                       <Route path='/user' component={Content} />
                       <Route path='/tugas' component={CreateTugas} />
+                      <Route path='/meet' component={MeetingBook} />
                   </App>
               </Switch>
         </Router>
