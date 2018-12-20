@@ -50,6 +50,14 @@ const styles = (theme : any) => createStyles({
       },
 })
 
+interface ITugas {
+    mahasiswa :  {
+        tugas :  {
+            judul : string
+        }
+    }
+}
+
 interface IProps {
     classes : any
     user : IUserType
@@ -59,6 +67,7 @@ interface IState {
     open : boolean
     code : string
     id_mahasiswa : string
+    activeStep : number
 }
 
 class Content extends React.Component<IProps, IState> {
@@ -68,7 +77,8 @@ class Content extends React.Component<IProps, IState> {
         this.state = {
             open : false,
             code : '',
-            id_mahasiswa : this.props.user.id_mahasiswa
+            id_mahasiswa : this.props.user.id_mahasiswa,
+            activeStep : 0,
         }
     }
 
@@ -106,10 +116,35 @@ class Content extends React.Component<IProps, IState> {
                     <Grid container={true} spacing={24}>
                         <Grid item={true} xs={12}>
                             <Paper className={classes.paper}> 
-                                <Typography variant='headline' align='center'>
-                                    Progress Tugas Akhir
-                                </Typography>
-                                <ProgressTugasAkhir />
+                                <Query<ITugas>
+                                query={getMahasiswaQuery}
+                                variables={{ id : this.state.id_mahasiswa }}
+                                >
+                                    {({data, loading}) => {
+                                        if(loading || !data || data.mahasiswa===null)
+                                        {
+                                            return(
+                                                <div>
+                                                    <Typography variant='headline' align='center'>
+                                                        Progress Tugas Akhir
+                                                    </Typography>
+                                                </div>
+                                            )
+                                        }
+
+                                        return(
+                                            <div>
+                                                <Typography variant='headline' align='center'>
+                                                    {data.mahasiswa.tugas.judul}
+                                                </Typography>
+                                                <ProgressTugasAkhir 
+                                                    id_mahasiswa={this.state.id_mahasiswa}
+                                                    tugas={data.mahasiswa.tugas}
+                                                />
+                                            </div>
+                                        )
+                                    }}
+                                </Query>
                             </Paper>
                         </Grid>
                         <Grid item={true} xs={6}>
