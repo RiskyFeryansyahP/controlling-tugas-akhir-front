@@ -73,6 +73,7 @@ interface IState {
     keterangan : string
     jam_awal : string
     jam_akhir : string
+    tgl : string
     dosen_code : string
     [key : string] : any
 }
@@ -88,8 +89,16 @@ class MeetingBook extends React.Component<IProps, IState> {
             keterangan : '',
             jam_awal : '',
             jam_akhir : '',
+            tgl : '',
             dosen_code : ''
         }
+    }
+
+    public componentWillMount()
+    {
+        const waktu = new Date()
+        const now = waktu.toISOString().slice(0,10)
+        this.setState({ tgl : now })
     }
 
     public handleChange = (panel : any) => (event : any, expanded : any) => {
@@ -117,6 +126,7 @@ class MeetingBook extends React.Component<IProps, IState> {
                 dosen_code : this.state.dosen_code,
                 jam_awal : this.state.jam_awal,
                 jam_akhir : this.state.jam_akhir,
+                tgl : this.state.tgl,
                 keterangan : this.state.keterangan
             },
             refetchQueries : [{ query :  getMeetDosen, variables : { id_mahasiswa : this.state.id_mahasiswa }}]
@@ -147,7 +157,7 @@ class MeetingBook extends React.Component<IProps, IState> {
                                             variables={{ id_mahasiswa : this.state.id_mahasiswa }}
                                         >
                                             {({ data, loading }) => {
-                                                console.log(data)
+                                                console.log("Meeting ", data)
                                                 if(loading || !data || data.meetDosen === null)
                                                 {
                                                     return(<Typography variant='headline' align='center'> 
@@ -179,6 +189,9 @@ class MeetingBook extends React.Component<IProps, IState> {
                                                                         <Typography variant='subtitle2'> Jam Akhir : {meet.jam_akhir} </Typography>
                                                                     </ExpansionPanelDetails>
                                                                     <ExpansionPanelDetails>
+                                                                        <Typography variant='subtitle2'> Tanggal : {meet.tgl} </Typography>
+                                                                    </ExpansionPanelDetails>
+                                                                    <ExpansionPanelDetails>
                                                                         <Typography variant='subtitle2'> Dosen : {meet.mahasiswa.dosen.firstName} </Typography>
                                                                     </ExpansionPanelDetails>
                                                                 </ExpansionPanel>
@@ -201,6 +214,7 @@ class MeetingBook extends React.Component<IProps, IState> {
                                     keterangan={this.state.keterangan}
                                     jam_awal={this.state.jam_awal}
                                     jam_akhir={this.state.jam_akhir}
+                                    tgl={this.state.tgl}
                                     dosen_code={this.state.dosen_code}
                                     handleChange={this.handleChangeText}
                                     onSubmitMeetDosen={this.submitMeetDosen}
