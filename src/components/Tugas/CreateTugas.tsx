@@ -3,7 +3,7 @@ import { Mutation } from 'react-apollo'
 import { connect } from 'react-redux'
 
 // import query from server
-import { addTugasToMahasiswaMutation } from '../../queries/Query'
+import { addTugasToMahasiswaMutation, getMahasiswaQuery } from '../../queries/Query'
 
 // import reducer types
 import { IUserType } from '../../reducers/UserType'
@@ -54,6 +54,8 @@ interface IProps {
 interface IState {
     judul : string
     keterangan : string
+    seminar1 : string
+    seminar2 : string
     open : boolean
     [key : string] : any
 }
@@ -66,8 +68,20 @@ class CreateTugas extends React.Component<IProps, IState> {
         this.state = {
             judul : '',
             keterangan : '',
+            seminar1 : '',
+            seminar2: '',
             open : false
         }
+    }
+
+    public componentWillMount()
+    {
+        const waktu = new Date()
+        waktu.setDate(waktu.getDate() + 30)
+        const now : string = waktu.toISOString().slice(0,10)
+        waktu.setDate(waktu.getDate() + 30)
+        const monthLater : string = waktu.toISOString().slice(0,10)
+        this.setState({ seminar1 : now, seminar2 : monthLater })
     }
 
     public handleChange = (e : React.FormEvent<HTMLInputElement>) : void => {
@@ -88,7 +102,10 @@ class CreateTugas extends React.Component<IProps, IState> {
                 id : this.props.user.id_mahasiswa,
                 judul : this.state.judul,
                 keterangan : this.state.keterangan,
-            }
+                seminar1 : this.state.seminar1,
+                seminar2 : this.state.seminar2
+            },
+            refetchQueries : [{ query : getMahasiswaQuery, variables : { id : this.props.user.id_mahasiswa } }]
         })
         .then((res : any) => {
             if(res.data && res.data.addTugasMahasiswa)
@@ -131,6 +148,30 @@ class CreateTugas extends React.Component<IProps, IState> {
                                         margin='dense'
                                         name='keterangan'
                                         value={this.state.keterangan}
+                                        onChange={HandleChange}
+                                    />
+                                </Grid>
+                                <Grid item={true} xs={12}>
+                                    <TextField 
+                                        id="seminar1"
+                                        label="Seminar 1"
+                                        className={classNames(classes.textField, classes.dense)}
+                                        margin='dense'
+                                        name='seminar1'
+                                        disabled={true}
+                                        value={this.state.seminar1}
+                                        onChange={HandleChange}
+                                    />
+                                </Grid>
+                                <Grid item={true} xs={12}>
+                                    <TextField 
+                                        id="seminar2"
+                                        label="Seminar 2"
+                                        className={classNames(classes.textField, classes.dense)}
+                                        margin='dense'
+                                        name='seminar2'
+                                        disabled={true}
+                                        value={this.state.seminar2}
                                         onChange={HandleChange}
                                     />
                                 </Grid>
