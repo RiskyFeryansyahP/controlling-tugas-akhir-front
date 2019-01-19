@@ -45,8 +45,8 @@ export const AddDosenToMahasiswaMutation = gql`
 `
 
 export const addTugasToMahasiswaMutation = gql`
-    mutation AddTugasToMahasiswa($id : String!, $judul : String!, $keterangan : String!) {
-        addTugasMahasiswa(id : $id, judul : $judul, keterangan : $keterangan) {
+    mutation AddTugasToMahasiswa($id : String!, $judul : String!, $keterangan : String!, $seminar1 : String!, $seminar2 : String!) {
+        addTugasMahasiswa(id : $id, judul : $judul, keterangan : $keterangan, seminar1 : $seminar1, seminar2 : $seminar2) {
             ... mahasiswaDetail
             ... tugasDetail
         }
@@ -56,8 +56,8 @@ export const addTugasToMahasiswaMutation = gql`
 `
 
 export const MahasiswaAddMeetWithDosenMutation = gql`
-    mutation MahasiswaAddMeetWithDosen($id_mahasiswa : String!, $dosen_code : String!, $jam_awal : String!, $jam_akhir : String!, $keterangan : String!) {
-        mahasiswaAddMeetWithDosen(id_mahasiswa : $id_mahasiswa, dosen_code : $dosen_code, jam_awal : $jam_awal, jam_akhir : $jam_akhir, keterangan : $keterangan) {
+    mutation MahasiswaAddMeetWithDosen($id_mahasiswa : String!, $dosen_code : String!, $jam_awal : String!, $jam_akhir : String!, $tgl : String!, $keterangan : String!) {
+        mahasiswaAddMeetWithDosen(id_mahasiswa : $id_mahasiswa, dosen_code : $dosen_code, jam_awal : $jam_awal, jam_akhir : $jam_akhir, tgl : $tgl, keterangan : $keterangan) {
             jam_awal,
             jam_akhir,
             keterangan
@@ -111,6 +111,7 @@ export const getMeetDosen = gql`
             id
             jam_awal
             jam_akhir
+            tgl
             keterangan
             status
             mahasiswa {
