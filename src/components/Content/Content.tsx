@@ -121,7 +121,7 @@ class Content extends React.Component<IProps, IState> {
                                 variables={{ id : this.state.id_mahasiswa }}
                                 >
                                     {({data, loading}) => {
-                                        if(loading || !data || data.mahasiswa===null)
+                                        if(loading || !data || data.mahasiswa.tugas===null)
                                         {
                                             return(
                                                 <div>
@@ -166,12 +166,67 @@ class Content extends React.Component<IProps, IState> {
                             </Paper>
                         </Grid>
                         <Grid item={true} xs={6}>
-                            <AppBar position='static'>
+                            <Query<IDosen>
+                                query={getMahasiswaQuery}
+                                variables={{ id : this.state.id_mahasiswa }}
+                            >
+                                {({ data, loading }) => {
+                                    if(loading || !data || data.mahasiswa.dosen === null)
+                                    {
+                                        // cek data dan loading dulu agar data dan loading bisa diambil datanya di luar if
+                                        return(
+                                            <React.Fragment>
+                                            <AppBar position='static'>
+                                                <ToolBar>
+                                                    <Typography variant='h6' color='inherit' align='left' className={classes.grow}> 
+                                                        Dosen Terkait
+                                                    </Typography>
+                                                    <Fab color='secondary' aria-label='Add' onClick={this.handleClickOpen}>
+                                                        <AddIcon />
+                                                    </Fab>
+                                                    <DialogFormAddDosen 
+                                                        open={this.state.open}
+                                                        handleClose={this.handleClose}
+                                                        submitCodeDosen={this.submitCodeDosen}
+                                                        handleChange={this.handleChange}
+                                                        code={this.state.code}
+                                                    />
+                                                </ToolBar>
+                                            </AppBar>
+                                            <Paper className={classes.paper}> 
+                                                <Typography variant='headline' align='center' className={classes.grow}>
+                                                    Masukkan Dosen Terlebih dahulu
+                                                </Typography>
+                                            </Paper>
+                                        </React.Fragment>
+                                        )
+                                    }
+                                    return(
+                                        <React.Fragment>
+                                            <AppBar position='static'>
+                                                <ToolBar>
+                                                    <Typography variant='h6' color='inherit' align='left' className={classes.grow}> 
+                                                        Dosen Terkait
+                                                    </Typography>
+                                                </ToolBar>
+                                            </AppBar>
+                                            <Paper className={classes.paper}> 
+                                                <Typography variant='headline' align='center' className={classes.grow}>
+                                                <DosenProfile 
+                                                    dosen={data.mahasiswa.dosen}
+                                                />
+                                                </Typography>
+                                            </Paper>
+                                        </React.Fragment>
+                                    )
+                                }}
+                            </Query>
+                            {/* <AppBar position='static'>
                                 <ToolBar>
                                     <Typography variant='h6' color='inherit' align='left' className={classes.grow}> 
                                         Dosen Terkait
                                     </Typography>
-                                    <Fab color='secondary' aria-label='Add' onClick={this.handleClickOpen}>
+                                    <Fab color='secondary' disabled={true} aria-label='Add' onClick={this.handleClickOpen}>
                                         <AddIcon />
                                     </Fab>
                                     <DialogFormAddDosen 
@@ -204,7 +259,7 @@ class Content extends React.Component<IProps, IState> {
                                         }}
                                     </Query>
                                 </Typography>
-                            </Paper>
+                            </Paper> */}
                         </Grid>
                     </Grid>
                 </div>
