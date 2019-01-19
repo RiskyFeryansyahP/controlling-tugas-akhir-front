@@ -16,6 +16,7 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 
 const DialogFormAddMeet = (props : any) => {
     console.log('props id ', props.id_mahasiswa)
+    console.log('props tgl', props.tgl)
     return(
         <React.Fragment>
             <Query
@@ -48,12 +49,32 @@ const DialogFormAddMeet = (props : any) => {
                                 />
                                 <TextField 
                                     margin='dense'
+                                    id='tgl'
+                                    name='tgl'
+                                    label='Tanggal'
+                                    placeholder='contoh : 07/11/2019'
+                                    type='date'
+                                    defaultValue={props.tgl}
+                                    InputLabelProps={{
+                                        shrink : true
+                                    }}
+                                    fullWidth={true}
+                                    onChange={props.handleChange}
+                                />
+                                <TextField 
+                                    margin='dense'
                                     id='jam_awal'
                                     name='jam_awal'
                                     label='Jam Awal'
                                     placeholder='contoh : 08:00'
-                                    type='text'
-                                    value={props.jam_awal}
+                                    type='time'
+                                    defaultValue='08:00'
+                                    InputLabelProps={{
+                                        shrink : true
+                                    }}
+                                    inputProps={{
+                                        step : 300 // 5 menit
+                                    }}
                                     fullWidth={true}
                                     onChange={props.handleChange}
                                 />
@@ -63,8 +84,14 @@ const DialogFormAddMeet = (props : any) => {
                                     name='jam_akhir'
                                     label='Jam Akhir'
                                     placeholder='contoh : 10:00'
-                                    type='text'
-                                    value={props.jam_akhir}
+                                    type='time'
+                                    defaultValue='09:00'
+                                    InputLabelProps={{
+                                        shrink : true
+                                    }}
+                                    inputProps={{
+                                        step : 300 // 5 menit
+                                    }}
                                     fullWidth={true}
                                     onChange={props.handleChange}
                                 />
