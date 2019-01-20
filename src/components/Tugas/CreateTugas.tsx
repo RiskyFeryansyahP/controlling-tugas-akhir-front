@@ -1,9 +1,9 @@
 import * as React from 'react'
-import { Mutation } from 'react-apollo'
+import { Mutation, withApollo } from 'react-apollo'
 import { connect } from 'react-redux'
 
 // import query from server
-import { addTugasToMahasiswaMutation, getMahasiswaQuery } from '../../queries/Query'
+import { addTugasToMahasiswaMutation, getMahasiswaQuery, findTugas } from '../../queries/Query'
 
 // import reducer types
 import { IUserType } from '../../reducers/UserType'
@@ -43,12 +43,13 @@ const style = (theme : any) => createStyles({
     },
     paper : {
         height : '50vh',
-    }
+    },
 })
 
 interface IProps {
     classes : any
     user : IUserType
+    client : any
 }
 
 interface IState {
@@ -57,6 +58,8 @@ interface IState {
     seminar1 : string
     seminar2 : string
     open : boolean
+    error : boolean
+    disable : boolean
     [key : string] : any
 }
 
@@ -70,7 +73,9 @@ class CreateTugas extends React.Component<IProps, IState> {
             keterangan : '',
             seminar1 : '',
             seminar2: '',
-            open : false
+            open : false,
+            error : false,
+            disable : true
         }
     }
 
@@ -115,6 +120,25 @@ class CreateTugas extends React.Component<IProps, IState> {
         })
     }
 
+    public checkTugas = () =>
+    {
+        this.props.client.query({
+            query : findTugas,
+            variables : { judul : this.state.judul }
+        }).
+        then(( res : any) => {
+            console.log(res.data.findTugas.length === 0)
+            if(res.data.findTugas.length === 0)
+            {
+                this.setState({ disable : false, error : false })
+            }
+            else
+            {
+                this.setState({ error : true })
+            }
+        })
+    }
+
     public render()
     {
         console.log(this.props.user)
@@ -138,17 +162,22 @@ class CreateTugas extends React.Component<IProps, IState> {
                                         name='judul'
                                         value={this.state.judul}
                                         onChange={HandleChange}
+                                        error={this.state.error}
                                     />
+                                    <Button variant="outlined" onClick={this.checkTugas} color="primary" className={classes.button}>
+                                        CEK
+                                    </Button>
                                 </Grid>
                                 <Grid item={true} xs={12}>
                                     <TextField 
                                         id="keterangan"
-                                        label="Keterangan Tugas Akhir"
+                                        label="Abstrak / Keterangan Tugas Akhir"
                                         className={classNames(classes.textField, classes.dense)}
                                         margin='dense'
                                         name='keterangan'
                                         value={this.state.keterangan}
                                         onChange={HandleChange}
+                                        disabled={this.state.disable}
                                     />
                                 </Grid>
                                 <Grid item={true} xs={12}>
@@ -224,4 +253,4 @@ const mapStateToProps = (state : IUserType) => {
     }
 }
 
-export default connect(mapStateToProps)(withStyles(style)(CreateTugas))
+export default connect(mapStateToProps)(withApollo(withStyles(style)(CreateTugas)))
