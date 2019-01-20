@@ -122,3 +122,12 @@ export const getMeetDosen = gql`
         }
     }
 `
+
+export const findTugas = gql`
+    query FindTugas($judul : String!) {
+        findTugas(judul : $judul) {
+            id
+            judul
+        }
+    }
+`
