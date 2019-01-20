@@ -6,3 +6,12 @@ export interface IUserType {
     username : string
     isLoggedIn : boolean
 }
+
+export interface ITugasType {
+    findTugas : ItemTugasType[]
+}
+
+export interface ItemTugasType {
+    judul : string
+    id : string
+}
